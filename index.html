@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Món Quà — Chữa lành cảm xúc</title>
+<meta name="description" content="Món Quà — về với bình yên trong bạn. Khoá học miễn phí, sách hay và những gợi ý nhẹ nhàng cho tâm hồn." />
+<style>
+  :root{
+    --bg1:#fbf7f2; --bg2:#f3ece6; --card:#ffffff; --ink:#4a4039; --soft:#8a7d72;
+    --accent:#e8a87c; --accent2:#d98b66; --ring:rgba(217,139,102,.25); --line:#efe6dd;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);
+    background:linear-gradient(170deg,var(--bg1),var(--bg2));
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+    padding:32px 18px 56px;
+  }
+  .wrap{max-width:460px;margin:0 auto}
+  .head{text-align:center;margin-bottom:26px}
+  .avatar{
+    width:92px;height:92px;border-radius:50%;margin:0 auto 14px;
+    display:flex;align-items:center;justify-content:center;font-size:42px;
+    background:radial-gradient(circle at 35% 30%,#fff,#f7ede4);
+    box-shadow:0 10px 30px rgba(180,150,120,.20);border:1px solid #fff;
+  }
+  h1{font-size:23px;font-weight:700;letter-spacing:.2px;margin-bottom:6px}
+  .tag{font-size:14.5px;color:var(--soft);line-height:1.5;max-width:300px;margin:0 auto}
+  .hero{
+    display:block;text-decoration:none;color:#fff;text-align:center;
+    margin:24px 0 10px;padding:17px 18px;border-radius:20px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    box-shadow:0 12px 28px var(--ring);font-weight:700;font-size:16px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .hero small{display:block;font-weight:500;font-size:12.5px;opacity:.92;margin-top:3px}
+  .hero:hover{transform:translateY(-2px);box-shadow:0 16px 34px var(--ring)}
+  .sec{margin-top:26px}
+  .sec h2{
+    font-size:12.5px;text-transform:uppercase;letter-spacing:1.4px;
+    color:var(--soft);font-weight:600;margin:0 6px 12px;display:flex;align-items:center;gap:8px;
+  }
+  .sec h2::after{content:"";flex:1;height:1px;background:var(--line)}
+  .btn{
+    display:flex;align-items:center;gap:13px;text-decoration:none;color:var(--ink);
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:14px 16px;margin-bottom:12px;
+    box-shadow:0 4px 14px rgba(180,150,120,.08);
+    transition:transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(180,150,120,.16);border-color:#e6d6c8}
+  .btn .ic{font-size:22px;flex:0 0 auto;width:34px;text-align:center}
+  .btn .tx{flex:1;min-width:0}
+  .btn .tx b{display:block;font-size:15px;font-weight:600;line-height:1.35}
+  .btn .tx span{display:block;font-size:12.5px;color:var(--soft);margin-top:1px}
+  .btn .go{color:#cbb6a4;font-size:18px;flex:0 0 auto}
+  .empty{font-size:13px;color:var(--soft);text-align:center;padding:6px 10px;font-style:italic}
+  .foot{margin-top:30px;text-align:center;font-size:11.5px;color:#a99c8f;line-height:1.6}
+  .skeleton{height:62px;border-radius:16px;margin-bottom:12px;
+    background:linear-gradient(90deg,#f3ebe3,#f8f2ec,#f3ebe3);background-size:200% 100%;
+    animation:sh 1.3s infinite}
+  @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <div class="avatar">🌿</div>
+      <h1>Món Quà</h1>
+      <p class="tag">Chữa lành cảm xúc — về với bình yên trong bạn 💛</p>
+    </div>
+
+    <a class="hero" href="https://quavogia.github.io/mon-qua-tang-nguoi-tran-quy/" target="_blank" rel="noopener">
+      🎁 Khoá học “Món Quà” — MIỄN PHÍ
+      <small>Hành trình về với chính mình · đăng ký nhận ngay</small>
+    </a>
+
+    <div id="books" class="sec" hidden>
+      <h2>📖 Sách hay chữa lành</h2>
+      <div id="books-list"></div>
+    </div>
+
+    <div class="sec">
+      <h2>🕊️ Cho tâm hồn an yên</h2>
+      <div id="products-list">
+        <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+      </div>
+    </div>
+
+    <p class="foot">
+      Một vài liên kết là liên kết giới thiệu (affiliate) — bạn mua ủng hộ, mình có chút động lực làm thêm nội dung 💛<br/>
+      © Món Quà
+    </p>
+  </div>
+
+<script>
+  var ENDPOINT = "https://180-93-59-9.sslip.io/webhook/bio-data-mq";
+  function el(tag, cls){ var e=document.createElement(tag); if(cls) e.className=cls; return e; }
+  function makeBtn(icon, title, sub, url){
+    var a=el('a','btn'); a.href=url; a.target='_blank'; a.rel='noopener nofollow sponsored';
+    var ic=el('div','ic'); ic.textContent=icon;
+    var tx=el('div','tx'); var b=el('b'); b.textContent=title; tx.appendChild(b);
+    if(sub){ var s=el('span'); s.textContent=sub; tx.appendChild(s); }
+    var go=el('div','go'); go.textContent='›';
+    a.appendChild(ic); a.appendChild(tx); a.appendChild(go);
+    return a;
+  }
+  function render(items){
+    var books = items.filter(function(i){return i.type==='book';});
+    var prods = items.filter(function(i){return i.type==='product';});
+    var bl=document.getElementById('books-list');
+    if(books.length){
+      document.getElementById('books').hidden=false;
+      books.forEach(function(i){ bl.appendChild(makeBtn('📖', i.name, i.author?('Tác giả: '+i.author):'Mua trên Shopee', i.url)); });
+    }
+    var pl=document.getElementById('products-list'); pl.innerHTML='';
+    if(prods.length){
+      prods.forEach(function(i){ pl.appendChild(makeBtn('🛍️', i.name, 'Xem trên Shopee', i.url)); });
+    } else {
+      pl.appendChild((function(){var d=el('div','empty'); d.textContent='Sắp có thêm gợi ý dễ thương ✨'; return d;})());
+    }
+  }
+  fetch(ENDPOINT, {cache:'no-store'})
+    .then(function(r){ return r.json(); })
+    .then(function(j){ render((j && j.items) ? j.items : []); })
+    .catch(function(){
+      var pl=document.getElementById('products-list');
+      pl.innerHTML='';
+      pl.appendChild((function(){var d=el('div','empty'); d.textContent='Đang cập nhật nội dung, bạn quay lại sau nhé 💛'; return d;})());
+    });
+</script>
+</body>
+</html>
